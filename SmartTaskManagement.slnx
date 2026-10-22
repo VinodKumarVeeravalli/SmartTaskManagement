@@ -1,0 +1,9 @@
+<Solution>
+  <Folder Name="/src/" />
+  <Folder Name="/src/Backend/">
+    <Project Path="STM.API/STM.API.csproj" Id="8ecd55b5-d9d1-47f2-a3f1-7b86a9080f9f" />
+    <Project Path="STM.Application/STM.Application.csproj" />
+    <Project Path="STM.Domain/STM.Domain.csproj" />
+    <Project Path="STM.Infrastructure/STM.Infrastructure.csproj" />
+  </Folder>
+</Solution>
