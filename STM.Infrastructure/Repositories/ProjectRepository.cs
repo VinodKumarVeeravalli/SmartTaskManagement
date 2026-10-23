@@ -1,10 +1,22 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using Microsoft.EntityFrameworkCore;
+using STM.Application.Interfaces.Repositories;
+using STM.Domain.Entities;
+using STM.Infrastructure.Persistence;
 
 namespace STM.Infrastructure.Repositories
 {
-    public class ProjectRepository
+    public class ProjectRepository : IProjectRepository
     {
+        private readonly STMDBContext _context;
+
+        public ProjectRepository(STMDBContext context)
+        {
+            _context = context;
+        }
+
+        public async Task<List<Project>> GetAllProjectsAsync()
+        {
+            return await _context.Projects.AsNoTracking().ToListAsync();
+        }
     }
 }

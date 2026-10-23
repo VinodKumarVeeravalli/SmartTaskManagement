@@ -1,10 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using STM.Domain.Entities;
 
 namespace STM.Application.Interfaces.Repositories
 {
     public interface IProjectRepository
     {
+        Task<List<Project>> GetAllProjectsAsync();
     }
 }

@@ -1,10 +1,21 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using STM.Application.Interfaces.Repositories;
+using STM.Application.Interfaces.Services;
+using STM.Domain.Entities;
 
 namespace STM.Application.Services
 {
-    public class ProjectService
+    public class ProjectService : IProjectService
     {
+        private readonly IProjectRepository _projectRepository;
+
+        public ProjectService(IProjectRepository projectRepository)
+        {
+            _projectRepository = projectRepository;
+        }
+
+        public async Task<List<Project>> GetAllProjectsAsync()
+        {
+            return await _projectRepository.GetAllProjectsAsync();
+        }
     }
 }
