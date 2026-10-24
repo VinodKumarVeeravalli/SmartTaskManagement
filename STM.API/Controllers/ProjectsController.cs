@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using STM.Application.DTO;
 using STM.Application.Interfaces.Services;
-using STM.Domain.Entities;
 
 namespace STM.API.Controllers
 {
@@ -15,11 +15,22 @@ namespace STM.API.Controllers
         }
 
         [HttpGet]
-        public async Task<ActionResult<List<Project>>> GetAllProjectsAsync()
+        public async Task<ActionResult<List<ProjectResponseDto>>> GetAllProjectsAsync()
         {
             var projects = await _projectService.GetAllProjectsAsync();
 
             return Ok(projects);
+        }
+
+        [HttpGet("{id}")]
+        public async Task<ActionResult<ProjectResponseDto>> GetProjectByIdAsync(int id)
+        {
+            var project = await _projectService.GetProjectByIdAsync(id);
+            if (project == null)
+            {
+                return NotFound();
+            }
+            return Ok(project);
         }
     }
 }

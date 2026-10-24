@@ -1,9 +1,11 @@
-﻿using STM.Domain.Entities;
+﻿using STM.Application.DTO;
 
 namespace STM.Application.Interfaces.Services
 {
     public interface IProjectService
     {
-        Task<List<Project>> GetAllProjectsAsync();
+        Task<List<ProjectResponseDto>> GetAllProjectsAsync();
+
+        Task<ProjectResponseDto> GetProjectByIdAsync(int id);
     }
 }

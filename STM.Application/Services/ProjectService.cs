@@ -1,6 +1,7 @@
-﻿using STM.Application.Interfaces.Repositories;
+﻿using Mapster;
+using STM.Application.DTO;
+using STM.Application.Interfaces.Repositories;
 using STM.Application.Interfaces.Services;
-using STM.Domain.Entities;
 
 namespace STM.Application.Services
 {
@@ -13,9 +14,16 @@ namespace STM.Application.Services
             _projectRepository = projectRepository;
         }
 
-        public async Task<List<Project>> GetAllProjectsAsync()
+        public async Task<List<ProjectResponseDto>> GetAllProjectsAsync()
         {
-            return await _projectRepository.GetAllProjectsAsync();
+            var projects = await _projectRepository.GetAllProjectsAsync();
+            return projects.Adapt<List<ProjectResponseDto>>();
+        }
+
+        public async Task<ProjectResponseDto> GetProjectByIdAsync(int id)
+        {
+            var project = await _projectRepository.GetProjectByIdAsync(id);
+            return project.Adapt<ProjectResponseDto>();
         }
     }
 }

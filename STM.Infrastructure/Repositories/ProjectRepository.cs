@@ -18,5 +18,10 @@ namespace STM.Infrastructure.Repositories
         {
             return await _context.Projects.AsNoTracking().ToListAsync();
         }
+
+        public async Task<Project> GetProjectByIdAsync(int id)
+        {
+            return await _context.Projects.FirstOrDefaultAsync(p => p.ProjectId == id);
+        }
     }
 }
