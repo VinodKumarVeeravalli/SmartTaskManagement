@@ -32,5 +32,28 @@ namespace STM.API.Controllers
             }
             return Ok(project);
         }
+
+        [HttpDelete("{id}")]
+        public async Task<ActionResult<bool>> DeleteProjectByIdAsync(int id)
+        {
+            var result = await _projectService.DeleteProjectByIdAsync(id);
+            if (!result)
+            {
+                return NotFound();
+            }
+            return Ok(result);
+        }
+
+        [HttpPost]
+        public async Task<ActionResult<ProjectResponseDto>> AddProjectAsync([FromBody] AddProjectDto project)
+        {
+            var result = await _projectService.AddProjectAsync(project);
+
+            if (project == null)
+            {
+                return NotFound();
+            }
+            return Ok(project);
+        }
     }
 }

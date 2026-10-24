@@ -23,5 +23,26 @@ namespace STM.Infrastructure.Repositories
         {
             return await _context.Projects.FirstOrDefaultAsync(p => p.ProjectId == id);
         }
+
+        public async Task<bool> DeleteProjectByIdAsync(int id)
+        {
+            var project = await _context.Projects.FindAsync(id);
+
+            if (project is null)
+                return false;
+
+            _context.Projects.Remove(project);
+
+            await _context.SaveChangesAsync();
+
+            return true;
+        }
+
+        public async Task<Project> AddProjectAsync(Project project)
+        {
+            _context.Projects.Add(project);
+            await _context.SaveChangesAsync();
+            return project;
+        }
     }
 }

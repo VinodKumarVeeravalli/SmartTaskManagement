@@ -2,6 +2,7 @@
 using STM.Application.DTO;
 using STM.Application.Interfaces.Repositories;
 using STM.Application.Interfaces.Services;
+using STM.Domain.Entities;
 
 namespace STM.Application.Services
 {
@@ -24,6 +25,20 @@ namespace STM.Application.Services
         {
             var project = await _projectRepository.GetProjectByIdAsync(id);
             return project.Adapt<ProjectResponseDto>();
+        }
+
+        public async Task<bool> DeleteProjectByIdAsync(int id)
+        {
+            return await _projectRepository.DeleteProjectByIdAsync(id);
+        }
+
+        public async Task<ProjectResponseDto> AddProjectAsync(AddProjectDto project)
+        {
+            var projectEntity = project.Adapt<Project>();
+
+            projectEntity.CreatedDate = DateTime.UtcNow;
+            var addedProject = await _projectRepository.AddProjectAsync(projectEntity);
+            return addedProject.Adapt<ProjectResponseDto>();
         }
     }
 }

@@ -7,5 +7,9 @@ namespace STM.Application.Interfaces.Repositories
         Task<List<Project>> GetAllProjectsAsync();
 
         Task<Project> GetProjectByIdAsync(int id);
+
+        Task<bool> DeleteProjectByIdAsync(int id);
+
+        Task<Project> AddProjectAsync(Project project);
     }
 }
