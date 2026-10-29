@@ -21,7 +21,7 @@ builder.Services.AddDbContext<STMDBContext>(options =>
 options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 var app = builder.Build();
 
-
+app.MapOpenApi();
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
@@ -34,5 +34,15 @@ app.UseHttpsRedirection();
 app.UseAuthorization();
 
 app.MapControllers();
+
+app.MapGet("/health", () =>
+{
+    return Results.Ok(new
+    {
+        Status = "Healthy",
+        Application = "STM.API",
+        Timestamp = DateTime.UtcNow
+    });
+});
 
 app.Run();
