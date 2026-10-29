@@ -22,6 +22,11 @@ options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnectio
 var app = builder.Build();
 
 app.MapOpenApi();
+
+app.MapScalarApiReference(options =>
+{
+    options.WithTitle("Smart Task Management API");
+});
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
