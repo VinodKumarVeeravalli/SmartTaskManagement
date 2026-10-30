@@ -22,8 +22,14 @@ namespace STM.Infrastructure.Persistence.Configurations
             builder.Property(p => p.Description)
                 .HasMaxLength(1000);
 
-            builder.Property(p => p.CreatedDate)
-                .HasDefaultValueSql("GETUTCDATE()");
+            builder.Property(p => p.CreatedBy)
+                    .HasMaxLength(450)
+                    .IsRequired();
+
+            builder.HasOne(p => p.CreatedByUser)
+                .WithMany()
+                .HasForeignKey(p => p.CreatedBy)
+                .OnDelete(DeleteBehavior.Restrict);
 
             builder.HasIndex(p => p.ProjectName)
                 .IsUnique();

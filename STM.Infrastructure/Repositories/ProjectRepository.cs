@@ -16,7 +16,7 @@ namespace STM.Infrastructure.Repositories
 
         public async Task<List<Project>> GetAllProjectsAsync()
         {
-            return await _context.Projects.AsNoTracking().ToListAsync();
+            return await _context.Projects.AsNoTracking().Include(p => p.CreatedByUser).ToListAsync();
         }
 
         public async Task<Project> GetProjectByIdAsync(int id)

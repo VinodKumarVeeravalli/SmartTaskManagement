@@ -8,7 +8,11 @@
 
         public string? Description { get; set; }
 
-        public int CreatedBy { get; set; }
+        //foreign key to aspnetusers.id
+        public string CreatedBy { get; set; } = string.Empty;
+
+        //navigation property to ApplicationUser
+        public ApplicationUser CreatedByUser { get; set; } = null!;
 
         public DateTime CreatedDate { get; set; }
 

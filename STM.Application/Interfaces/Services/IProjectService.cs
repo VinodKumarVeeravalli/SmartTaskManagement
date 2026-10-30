@@ -10,6 +10,6 @@ namespace STM.Application.Interfaces.Services
 
         Task<bool> DeleteProjectByIdAsync(int id);
 
-        Task<ProjectResponseDto> AddProjectAsync(AddProjectDto project);
+        Task<ProjectResponseDto> AddProjectAsync(AddProjectDto project, string userId);
     }
 }

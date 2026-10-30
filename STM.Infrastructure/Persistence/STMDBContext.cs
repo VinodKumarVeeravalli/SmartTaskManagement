@@ -1,16 +1,17 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore;
 using STM.Domain.Entities;
 
 
 namespace STM.Infrastructure.Persistence
 {
-    public class STMDBContext : DbContext
+    public class STMDBContext : IdentityDbContext<ApplicationUser>
     {
         public STMDBContext(DbContextOptions<STMDBContext> options) : base(options)
         {
-
         }
 
+        //DB SETS
         public DbSet<Project> Projects { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)

@@ -1,11 +1,14 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using STM.Application.DTO;
 using STM.Application.Interfaces.Services;
+using System.Security.Claims;
 
 namespace STM.API.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
+    [Authorize]
     public class ProjectsController : ControllerBase
     {
         private readonly IProjectService _projectService;
@@ -33,6 +36,7 @@ namespace STM.API.Controllers
             return Ok(project);
         }
 
+        [Authorize(Roles = "Admin")]
         [HttpDelete("{id}")]
         public async Task<ActionResult<bool>> DeleteProjectByIdAsync(int id)
         {
@@ -44,16 +48,20 @@ namespace STM.API.Controllers
             return Ok(result);
         }
 
+        [Authorize(Roles = "Admin,Manager")]
         [HttpPost]
         public async Task<ActionResult<ProjectResponseDto>> AddProjectAsync([FromBody] AddProjectDto project)
         {
-            var result = await _projectService.AddProjectAsync(project);
+            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier) ?? User.FindFirstValue("sub");
 
-            if (project == null)
+            if (string.IsNullOrEmpty(userId))
             {
-                return NotFound();
+                return Unauthorized();
             }
-            return Ok(project);
+
+            var result = await _projectService.AddProjectAsync(project,userId);
+
+            return Ok(result);
         }
     }
 }

@@ -32,11 +32,12 @@ namespace STM.Application.Services
             return await _projectRepository.DeleteProjectByIdAsync(id);
         }
 
-        public async Task<ProjectResponseDto> AddProjectAsync(AddProjectDto project)
+        public async Task<ProjectResponseDto> AddProjectAsync(AddProjectDto project, string userId)
         {
             var projectEntity = project.Adapt<Project>();
 
             projectEntity.CreatedDate = DateTime.UtcNow;
+            projectEntity.CreatedBy = userId;
             var addedProject = await _projectRepository.AddProjectAsync(projectEntity);
             return addedProject.Adapt<ProjectResponseDto>();
         }
