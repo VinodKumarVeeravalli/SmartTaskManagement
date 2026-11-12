@@ -23,7 +23,16 @@ options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnectio
 
 builder.Services.AddIdentityServices();
 builder.Services.AddScoped<IAuthService, AuthService>();
-
+//cors
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("ReactFrontend", policy =>
+    {
+        policy.WithOrigins("http://localhost:5173")
+              .AllowAnyHeader()
+              .AllowAnyMethod();
+    });
+});
 // JWT TokenService + JWT Bearer authentication
 builder.Services.AddJwtAuthentication(builder.Configuration);
 
@@ -43,7 +52,7 @@ app.MapScalarApiReference(options =>
 //}
 
 app.UseHttpsRedirection();
-
+app.UseCors("ReactFrontend");
 app.UseAuthentication();
 app.UseAuthorization();
 
